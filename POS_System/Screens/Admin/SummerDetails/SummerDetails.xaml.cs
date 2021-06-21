@@ -1,5 +1,4 @@
-﻿using POS_System.Screens.Admin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,28 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POS_System
+namespace POS_System.Screens.Admin
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SummerDetails.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SummerDetails : UserControl
     {
-        public MainWindow()
+        public SummerDetails()
         {
             InitializeComponent();
-        }
-
-        private void Login_Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            Dashboard dashboard = new Dashboard();
-            dashboard.Show();
-            this.Close();
-
         }
     }
 }
