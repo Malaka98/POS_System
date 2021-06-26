@@ -52,6 +52,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -71,12 +72,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DBConnection.cs" />
+    <Compile Include="Screens\Admin\Employee\DBOperation\Delete.cs" />
+    <Compile Include="Screens\Admin\Employee\DBOperation\Search.cs" />
+    <Compile Include="Screens\Admin\Employee\DBOperation\Update.cs" />
+    <Compile Include="Screens\Admin\Employee\DBOperation\Display.cs" />
     <Compile Include="Screens\Admin\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Screens\Admin\Employee\Employee.xaml.cs">
       <DependentUpon>Employee.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Admin\Employee\Employer.cs" />
+    <Compile Include="Screens\Admin\Employee\EmpValidation.cs" />
+    <Compile Include="Screens\Admin\Employee\DBOperation\Insert.cs" />
+    <Compile Include="Screens\Admin\SummerDetails\GetDetails.cs" />
     <Compile Include="Screens\Admin\SummerDetails\SummerDetails.xaml.cs">
       <DependentUpon>SummerDetails.xaml</DependentUpon>
     </Compile>

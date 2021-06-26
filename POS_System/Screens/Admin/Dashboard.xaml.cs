@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using LiveCharts;
-using LiveCharts.Wpf;
 
 namespace POS_System.Screens.Admin
 {
@@ -24,7 +11,7 @@ namespace POS_System.Screens.Admin
         public Dashboard()
         {
             InitializeComponent();
-            DBConnection.getConnection();
+            DBConnection.GetConnection();
         }
 
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -44,20 +31,25 @@ namespace POS_System.Screens.Admin
             //UserControl usc = null;
 
 
-            //switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
-            //{
-            //case "ItemHome":
-            UserControl usc = new SummerDetails();
-            GridMain.Children.Clear();
-            GridMain.Children.Add(usc);
-                    //break;
-                //case "ItemCreate":
-                //    usc = new UserControlCreate();
-                //    GridMain.Children.Add(usc);
-                //    break;
-                //default:
-                    //break;
-            //}
+            switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
+            {
+                case "ItemHome":
+                    GridMain.Children.Clear();
+                    using (SummerDetails usc = new SummerDetails())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "ItemCreate":
+                    GridMain.Children.Clear();
+                    using (Employee usc = new Employee())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         //public void ChartLoad()
