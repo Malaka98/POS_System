@@ -31,7 +31,7 @@
         </EventTrigger>
     </Window.Triggers>
     <Grid Background="#FFDEDEDE">
-        <Grid x:Name="GridMain" HorizontalAlignment="Center" VerticalAlignment="Center" Height="700" Width="1000" Margin="0,100,0,0"/>
+        <Grid x:Name="GridMain" HorizontalAlignment="Center" VerticalAlignment="Center" Height="695" Width="1109" Margin="75,65,9.6,10.4"/>
         <Grid Height="60" VerticalAlignment="Top" Background="#FF5C99D6">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>

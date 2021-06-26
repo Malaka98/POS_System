@@ -1,32 +1,41 @@
 ﻿using System;
-using System.Windows.Controls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace POS_System.Screens.Admin
 {
-    /// <summary>
-    /// Interaction logic for SummerDetails.xaml
-    /// </summary>
-    public partial class SummerDetails : UserControl, IDisposable
+    internal class Search : IDisposable
     {
-        private readonly GetDetails obj;
+        private readonly DBConnection connectionOBJ = null;
+        private SqlDataAdapter adapt = null;
         private bool disposedValue;
 
-        public SummerDetails()
+        public Search()
         {
-            InitializeComponent();
-            obj = new GetDetails();
-            MyDashboard();
-            obj.Dispose();
+            connectionOBJ = DBConnection.GetConnection();
         }
 
-        public void MyDashboard()
+        public DataTable Search_Query(string sKey)
         {
-            lblUnit.Content = obj.DailySales().ToString("$#,##0.00");
-            lblLastMonthUnit.Content = obj.MonthlySales().ToString("$#,##0.00");
-            lblTotalSalesUnit.Content = obj.TotalSales().ToString("$#,##0.00");
-            lblProductLineUnit.Content = obj.ProductLine().ToString("#,##0");
-            lblProductStockUnit.Content = obj.ProductStock().ToString("#,##0");
-            lblCriticalUnits.Content = obj.CriticalProduct().ToString("#,##0");
+            try
+            {
+                connectionOBJ.GetConn().Open();
+                DataTable dt = new DataTable();
+                adapt = new SqlDataAdapter("select * from Employee where Name like '" + sKey + "%'", connectionOBJ.GetConn());
+                _ = adapt.Fill(dt);
+                return dt;
+            }
+            catch (SqlException e)
+            {
+                _ = MessageBox.Show(e.ToString());
+                return null;
+            }
+            finally
+            {
+                adapt.Dispose();
+                connectionOBJ.GetConn().Close();
+            }
 
         }
 
@@ -46,7 +55,7 @@ namespace POS_System.Screens.Admin
         }
 
         // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~SummerDetails()
+        // ~Search()
         // {
         //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         //     Dispose(disposing: false);

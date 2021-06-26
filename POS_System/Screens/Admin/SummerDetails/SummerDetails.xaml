@@ -10,12 +10,7 @@
         Height="700" Width="1100">
 
     <Grid Width="1150" Height="650" Margin="10">
-        <Border CornerRadius="5" Background="White" Margin="796,143,88,144">
-            <Border.Effect>
-                <DropShadowEffect Direction="-90" Opacity="0.1"/>
-            </Border.Effect>
-        </Border>
-        <Border CornerRadius="5" Background="White" Margin="92,143,439,144">
+        <Border CornerRadius="5" Background="White" Margin="255,143,276,144">
             <Border.Effect>
                 <DropShadowEffect Direction="-90" Opacity="0.1"/>
             </Border.Effect>
