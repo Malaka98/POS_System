@@ -1,5 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Employee = POS_System.Screens.Admin.Employee;
+using User = POS_System.Screens.Admin.Users;
+using Produts = POS_System.Screens.Admin.Products;
+using Categories = POS_System.Screens.Admin.Categories;
+using Dealers = POS_System.Screens.Admin.Dealers;
+using Customers = POS_System.Screens.Admin.Customers;
+using Inventory = POS_System.Screens.Admin.Inventory;
+using Transactions = POS_System.Screens.Admin.Transactions;
+using Sale = POS_System.Screens.Admin.Sale;
 
 namespace POS_System.Screens.Admin
 {
@@ -11,7 +20,7 @@ namespace POS_System.Screens.Admin
         public Dashboard()
         {
             InitializeComponent();
-            DBConnection.GetConnection();
+            _ = DBConnection.GetConnection();
         }
 
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -42,7 +51,63 @@ namespace POS_System.Screens.Admin
                     break;
                 case "ItemCreate":
                     GridMain.Children.Clear();
-                    using (Employee usc = new Employee())
+                    using (Employee::Employee usc = new Employee::Employee())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "User":
+                    GridMain.Children.Clear();
+                    using (User::Users usc = new User::Users())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "Products":
+                    GridMain.Children.Clear();
+                    using (Produts::Products usc = new Produts::Products())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "Categories":
+                    GridMain.Children.Clear();
+                    using (Categories::Categories usc = new Categories::Categories())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "Dealers":
+                    GridMain.Children.Clear();
+                    using (Dealers::Dealers usc = new Dealers::Dealers())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "Customers":
+                    GridMain.Children.Clear();
+                    using (Customers::Customers usc = new Customers::Customers())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "Inventory":
+                    GridMain.Children.Clear();
+                    using (Inventory::Inventory usc = new Inventory::Inventory())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "Transactions":
+                    GridMain.Children.Clear();
+                    using (Transactions::Transactions usc = new Transactions::Transactions())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "Sale":
+                    GridMain.Children.Clear();
+                    using (Sale::FrmSale usc = new Sale::FrmSale())
                     {
                         _ = GridMain.Children.Add(usc);
                     }
@@ -52,17 +117,26 @@ namespace POS_System.Screens.Admin
             }
         }
 
+        private void Dash_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (SummerDetails usc = new SummerDetails())
+            {
+                Uname.Text = MainWindow._name;
+                _ = GridMain.Children.Add(usc);
+            }
+        }
+
         //public void ChartLoad()
         //{
 
         //    PieChart1.InnerRadius = 30;
         //    PieChart1.LegendLocation = LegendLocation.Bottom;
 
-            
+
 
         //    PieChart1.Series = new SeriesCollection { };
 
-           
+
         //        PieChart1.Series.Add(
         //            new PieSeries
         //            {
@@ -71,7 +145,7 @@ namespace POS_System.Screens.Admin
         //                DataLabels = true
         //            }
         //        );
-            
+
 
         //}
 

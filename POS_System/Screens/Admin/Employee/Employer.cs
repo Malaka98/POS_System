@@ -1,4 +1,4 @@
-﻿namespace POS_System.Screens.Admin
+﻿namespace POS_System.Screens.Admin.Employee
 {
     internal class Employer
     {

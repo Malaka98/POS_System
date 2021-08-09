@@ -28,13 +28,14 @@ Title="MainWindow" Height="450" Width="800">
                     TextAlignment="Center"
                     Text="Login" />
                 <TextBox
+                    x:Name="txtUsername"
                     materialDesign:HintAssist.Hint="User Name"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     materialDesign:TextFieldAssist.UnderlineBrush="#4778C2"
                     Margin="10"
                     VerticalAlignment="Center" />
                 <PasswordBox
-                    x:Name="FloatingPasswordBox"
+                    x:Name="txtPassword"
                     materialDesign:HintAssist.Hint="Password"
                     materialDesign:TextFieldAssist.UnderlineBrush="#4778C2"
                     Margin="10"
@@ -42,6 +43,7 @@ Title="MainWindow" Height="450" Width="800">
                 <Grid>
 
                     <Button
+                        x:Name="btnLogin"
                     Style="{StaticResource MaterialDesignRaisedDarkButton}"
                     HorizontalAlignment="Right"
                     Margin="10"

@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data;
 
-namespace POS_System
+namespace POS_System.Screens.Admin.Employee
 {
     internal class Display : IDisposable
     {
