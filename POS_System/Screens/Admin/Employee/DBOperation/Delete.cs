@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Windows;
 
-namespace POS_System.Screens.Admin
+namespace POS_System.Screens.Admin.Employee
 {
     internal class Delete : IDisposable
     {

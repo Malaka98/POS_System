@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace POS_System.Screens.Admin
+namespace POS_System.Screens.Admin.Employee
 {
     internal static class EmpValidation
     {

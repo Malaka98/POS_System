@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Windows;
 
-namespace POS_System.Screens.Admin
+namespace POS_System.Screens.Admin.Employee
 
 {
     internal class Insert : IDisposable
@@ -99,5 +99,6 @@ namespace POS_System.Screens.Admin
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
     }
 }

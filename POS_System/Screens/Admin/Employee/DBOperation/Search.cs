@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
-namespace POS_System.Screens.Admin
+namespace POS_System.Screens.Admin.Employee
 {
     internal class Search : IDisposable
     {

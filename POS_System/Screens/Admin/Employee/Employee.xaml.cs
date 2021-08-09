@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Data;
 
-namespace POS_System.Screens.Admin
+
+namespace POS_System.Screens.Admin.Employee
 {
     /// <summary>
     /// Interaction logic for Employee.xaml

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using System;
+using System.Data.SqlClient;
 using System.Windows.Controls;
 
 namespace POS_System.Screens.Admin
@@ -16,18 +19,48 @@ namespace POS_System.Screens.Admin
             InitializeComponent();
             obj = new GetDetails();
             MyDashboard();
+            ChartLoad();
             obj.Dispose();
         }
 
         public void MyDashboard()
         {
-            lblUnit.Content = obj.DailySales().ToString("$#,##0.00");
-            lblLastMonthUnit.Content = obj.MonthlySales().ToString("$#,##0.00");
-            lblTotalSalesUnit.Content = obj.TotalSales().ToString("$#,##0.00");
+            lblUnit.Content = obj.DailySales().ToString("Rs#,##0.00");
+            lblLastMonthUnit.Content = obj.MonthlySales().ToString("Rs#,##0.00");
+            lblTotalSalesUnit.Content = obj.TotalSales().ToString("Rs#,##0.00");
             lblProductLineUnit.Content = obj.ProductLine().ToString("#,##0");
             lblProductStockUnit.Content = obj.ProductStock().ToString("#,##0");
             lblCriticalUnits.Content = obj.CriticalProduct().ToString("#,##0");
 
+        }
+
+        public void ChartLoad()
+        {
+            DBConnection connectionOBJ = DBConnection.GetConnection();
+
+            PieChart1.InnerRadius = 30;
+            PieChart1.LegendLocation = LegendLocation.Bottom;
+
+            connectionOBJ.GetConn().Open();
+
+            SqlCommand command = new SqlCommand("select Year(transaction_date) as year, isnull(sum(grandTotal),0.00) as grandTotal from tblTransaction where type like 'Sale' group by Year(transaction_date)", connectionOBJ.GetConn());
+            SqlDataReader dr = command.ExecuteReader();
+
+            PieChart1.Series = new SeriesCollection { };
+
+            while (dr.Read())
+            {
+                PieChart1.Series.Add(
+                    new PieSeries
+                    {
+                        Title = dr["year"].ToString(),
+                        Values = new ChartValues<double> { Convert.ToDouble(dr["grandTotal"].ToString()) },
+                        DataLabels = true
+                    }
+                );
+            }
+            command.Dispose();
+            connectionOBJ.GetConn().Close();
         }
 
         protected virtual void Dispose(bool disposing)
