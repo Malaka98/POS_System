@@ -158,6 +158,7 @@
     <Compile Include="Screens\Admin\Employee\Employer.cs" />
     <Compile Include="Screens\Admin\Employee\EmpValidation.cs" />
     <Compile Include="Screens\Admin\Inventory\DB_Operations\Display.cs" />
+    <Compile Include="Screens\Admin\Inventory\DB_Operations\Search.cs" />
     <Compile Include="Screens\Admin\Inventory\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
