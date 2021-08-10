@@ -39,7 +39,7 @@
                       Text="Filter By Category : " />
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                 <ComboBox
-                
+                SelectionChanged="ComboBox_SelectionChanged"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"
                 Padding="6"
                 Grid.Column="3"
