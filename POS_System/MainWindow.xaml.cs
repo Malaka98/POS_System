@@ -12,6 +12,7 @@ namespace POS_System
     {
         public static string loggedIn;
         public static string _name;
+        public static int _uID;
         private readonly DBConnection connectionOBJ = null;
         private SqlCommand cmd;
         private SqlDataReader rd;
@@ -43,7 +44,7 @@ namespace POS_System
                     _role = rd["UserType"].ToString();
                     _name = rd["Name"].ToString();
                     loggedIn = txtUsername.Text;
-                    _name = rd["Name"].ToString();
+                    _uID = int.Parse(rd["UserID"].ToString());
 
                 }
                 else
