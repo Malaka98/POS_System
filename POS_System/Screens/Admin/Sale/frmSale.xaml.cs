@@ -2,6 +2,7 @@
 using POS_System.Screens.Admin.Products;
 using POS_System.Screens.Admin.Sale.DB_Operations;
 using System;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,6 +20,7 @@ namespace POS_System.Screens.Admin.Sale
         private Control ActiveControl;
         private bool disposedValue;
         private string imgLoc = "laptop.png";
+        private DataTable transactionDT = new DataTable();
 
         public FrmSale()
         {
@@ -58,6 +60,12 @@ namespace POS_System.Screens.Admin.Sale
 
         private void Card_Loaded(object sender, RoutedEventArgs e)
         {
+
+            transactionDT.Columns.Add("Product Name");
+            transactionDT.Columns.Add("Price");
+            transactionDT.Columns.Add("Quantity");
+            transactionDT.Columns.Add("Total");
+
             // tmrClock.Start();
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Interval = 1000;
@@ -294,7 +302,7 @@ namespace POS_System.Screens.Admin.Sale
                     txtPDPrice.Text = p.Price.ToString();
                     imgLoc = p.Img;
 
-                    string paths = System.Windows.Forms.Application.StartupPath.Substring(0, (System.Windows.Forms.Application.StartupPath.Length - 10));
+                    string paths = System.Windows.Forms.Application.StartupPath.Substring(0, System.Windows.Forms.Application.StartupPath.Length - 10);
                     if (imgLoc != "laptop.png")
                     {
                         string imagePath = paths + "\\Images\\Product\\" + imgLoc;
@@ -309,21 +317,63 @@ namespace POS_System.Screens.Admin.Sale
                 }
             }catch(Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                _ = MessageBox.Show(ex.ToString());
             }
             
         }
 
         private void BtnADD_Click(object sender, RoutedEventArgs e)
         {
-            //Get Product Name, Rate and QTY customer wants to buy
-            //string productName = txtPDName.Text;
-            //decimal Rate = decimal.Parse(txtPDPrice.Text);
-            //decimal Qty = decimal.Parse(txtPDQuantity.Text);
-            //string Img = imgLoc;
-            //decimal Total = Rate * Qty;//Total=Rate*Qty
-            //decimal subTotal = decimal.Parse(txtSubTotal.Text);
-            //subTotal = subTotal + Total;
+            try
+            {
+                //Get Product Name, Rate and QTY customer wants to buy
+                string productName = txtPDName.Text;
+                decimal Rate = decimal.Parse(txtPDPrice.Text);
+                decimal Qty = decimal.Parse(txtPDQuantity.Text);
+                //string Img = imgLoc;
+                decimal Total = Rate * Qty;//Total=Rate*Qty
+                decimal subTotal = decimal.Parse(txtSubTotal.Text);
+                subTotal += Total;
+
+                if (productName == "")
+                {
+                    //Display error message
+                    _ = MessageBox.Show("Select the product first.");
+                }
+                else
+                {
+                    //Add product to the data Grid View
+                    transactionDT.Rows.Add(productName, Rate, Qty, Total);
+
+                    //Show in Data Grid View
+                    gridAddedProducts.ItemsSource = transactionDT.DefaultView;
+                    //Sizing DataGridView Columns Width
+                    gridAddedProducts.Columns[0].Width = 130;
+                    gridAddedProducts.Columns[1].Width = 90;
+                    gridAddedProducts.Columns[2].Width = 83;
+                    gridAddedProducts.Columns[3].Width = 100;
+                    //Display the subtotal in textbox
+                    txtSubTotal.Text = subTotal.ToString();
+
+
+                    //Clear the TextBoxes
+                    txtPDSearch.Text = "";
+                    txtPDName.Text = "";
+                    txtPDInventory.Text = "0.00";
+                    txtPDPrice.Text = "0.00";
+                    txtPDQuantity.Text = "0";
+                    string paths = System.Windows.Forms.Application.StartupPath.Substring(0, System.Windows.Forms.Application.StartupPath.Length - 10);
+
+                    string imagePath = paths + "\\Images\\Product\\laptop.png";
+                    imgBox.ImageSource = new BitmapImage(new Uri(imagePath));
+                    imgLoc = "laptop.png";
+                }
+            }
+            catch(Exception ex)
+            {
+                _ = MessageBox.Show("Error :- " + ex);
+            }
+
         }
     }
 }

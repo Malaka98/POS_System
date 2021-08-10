@@ -15,18 +15,17 @@ namespace POS_System.Screens.Admin.Transactions.DB_Operations
         private SqlCommand cmd = null;
         private SqlDataAdapter adapt = null;
         private bool disposedValue;
-        private readonly string d1;
-        private readonly string d2;
+        
 
-        public Filter_Search(string d1, string d2)
+        public Filter_Search()
         {
             connectionOBJ = DBConnection.GetConnection();
-            this.d1 = d1;
-            this.d2 = d2;
+            
         }
 
-        public DataTable Filter_query()
+        public DataTable Filter_query(string d1, string d2)
         {
+
             try
             {
                 connectionOBJ.GetConn().Open();
@@ -52,6 +51,36 @@ namespace POS_System.Screens.Admin.Transactions.DB_Operations
                 adapt.Dispose();
                 connectionOBJ.GetConn().Close();
             }
+        }
+
+        public DataTable DisplayTransactionByType(string type)
+        {
+
+            try
+            {
+                connectionOBJ.GetConn().Open();
+                DataTable dt = new DataTable();
+                cmd = new SqlCommand("SELECT id [ID], type [Type], DealCustID, grandTotal [Grand Total], transaction_date [Transaction Time], tax [TAX], discount [Discount] FROM tblTransaction WHERE type = @Type", connectionOBJ.GetConn());
+
+                _ = cmd.Parameters.AddWithValue("@Type", type);
+
+                adapt = new SqlDataAdapter(cmd);
+
+                _ = adapt.Fill(dt);
+                return dt;
+
+            }
+            catch (SqlException e)
+            {
+                _ = MessageBox.Show(e.ToString());
+                return null;
+            }
+            finally
+            {
+                adapt.Dispose();
+                connectionOBJ.GetConn().Close();
+            }
+
         }
 
         protected virtual void Dispose(bool disposing)

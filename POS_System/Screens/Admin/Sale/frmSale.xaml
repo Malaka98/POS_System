@@ -347,6 +347,7 @@
                         Text="Sub Total" />
                                 <TextBox
                                     x:Name="txtSubTotal"
+                                    Text="0"
                         VerticalAlignment="Center"
                                     HorizontalAlignment="Right"
                         Margin="63,0,0,0"

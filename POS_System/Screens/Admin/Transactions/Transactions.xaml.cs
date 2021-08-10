@@ -1,6 +1,7 @@
 ﻿using POS_System.Screens.Admin.Transactions.DB_Operations;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Windows.Controls;
 using Report = POS_System.Screens.Admin.Transactions.Report;
 
@@ -58,9 +59,9 @@ namespace POS_System.Screens.Admin.Transactions
 
         private void Load_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            using(Filter_Search ft = new Filter_Search(Date1.Text, Date2.Text))
+            using(Filter_Search ft = new Filter_Search())
             {
-                DataTable dt = ft.Filter_query();
+                DataTable dt = ft.Filter_query(Date1.Text, Date2.Text);
                 grid_Transactions.ItemsSource = dt.DefaultView;
             }
         }
@@ -76,6 +77,26 @@ namespace POS_System.Screens.Admin.Transactions
             Report::Report_Trancactions obj = new Report.Report_Trancactions();
             obj.Report2(Date1.Text, Date2.Text);
             _ = obj.ShowDialog();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                string type = (e.AddedItems[0] as ComboBoxItem).Content as string;
+                Filter_Search obj = new Filter_Search();
+                grid_Transactions.ItemsSource = obj.DisplayTransactionByType(type).DefaultView;
+
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            DisplayData();
         }
     }
 }
