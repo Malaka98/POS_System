@@ -241,5 +241,11 @@ namespace POS_System.Screens.Admin.Products
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Delete obj = new Delete();
+            obj.Delete_Query(int.Parse(txtCode.Text));
+        }
     }
 }

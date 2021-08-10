@@ -6,6 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:POS_System.Screens.Admin.Dealers"
         mc:Ignorable="d"
+             Loaded="UserControl_Loaded"
         >
     <materialDesign:Card
           Background="{DynamicResource MaterialDesignLightBackground}"
@@ -53,11 +54,12 @@
                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                       Text="ID : " />
             <TextBox
-                x:Name="name"
+                x:Name="txtID"
                 Grid.Column="1"
                 Grid.Row="1"
                 Margin="20,10,0,0"
                 HorizontalAlignment="Left"
+                IsReadOnly="True"
                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         VerticalAlignment="Top"
                         Width="200"
@@ -71,7 +73,7 @@
                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                       Text="Company : " />
                 <TextBox
-                
+                x:Name="txtName"
                 Grid.Column="1"
                 Grid.Row="1"
                 Margin="20,10,0,0"
@@ -90,7 +92,7 @@
                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                       Text="Mobile : " />
             <TextBox
-                
+                x:Name="txtMobile"
                 Grid.Column="1"
                 Grid.Row="2"
                 Margin="20,10,0,0"
@@ -108,7 +110,7 @@
                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                       Text="Email : " />
                 <TextBox
-                
+                x:Name="txtEmail"
                 Grid.Column="1"
                 Grid.Row="1"
                 Margin="20,10,0,0"
@@ -127,7 +129,8 @@
                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                       Text="Search : " />
             <TextBox
-                
+                x:Name="txtSearch"
+                TextChanged="TxtSearch_TextChanged"
                 Grid.Column="1"
                 Grid.Row="3"
                 Margin="20,10,0,0"
@@ -145,7 +148,7 @@
                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                       Text="Person : " />
             <TextBox
-                
+                x:Name="txtPerson"
                 Grid.Column="3"
                 Grid.Row="1"
                 Margin="20,10,0,0"
@@ -163,6 +166,7 @@
                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                       Text="Address : " />
             <TextBox
+                x:Name="txtAddress"
     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 Grid.Row="2"
                 Grid.Column="3"
@@ -176,10 +180,11 @@
             VerticalScrollBarVisibility="Auto"
             materialDesign:HintAssist.Hint="Address" Grid.RowSpan="2"
             />
-            <DataGrid x:Name="grid_Dealers" Grid.Row="4"  Height="300" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="1000" BorderThickness="1" BorderBrush="#00000000" Background="White" Grid.ColumnSpan="4" Margin="31,40,33,0"/>
+            <DataGrid x:Name="grid_Dealers" SelectionChanged="Grid_Dealers_SelectionChanged" Grid.Row="4"  Height="300" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="1000" BorderThickness="1" BorderBrush="#00000000" Background="White" Grid.ColumnSpan="4" Margin="31,40,33,0" IsReadOnly="True"/>
             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4" Grid.Row="5" HorizontalAlignment="Center">
                 <Button
-                
+                x:Name="btnAdd"
+                    Click="BtnAdd_Click"
                 Width="100"
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 Content="Insert"
@@ -187,7 +192,8 @@
                 materialDesign:ButtonAssist.CornerRadius="10"
                 ToolTip="MaterialDesignRaisedButton with Round Corners" />
                 <Button
-                
+                x:Name="btnUpdate"
+                    Click="BtnUpdate_Click"
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 Content="Update"
                 Width="100"
@@ -195,7 +201,8 @@
                 materialDesign:ButtonAssist.CornerRadius="10"
                 ToolTip="MaterialDesignRaisedButton with Round Corners" />
                 <Button
-                
+                x:Name="btnDelete"
+                    Click="BtnDelete_Click"
                 Width="100"
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 Content="Delete"

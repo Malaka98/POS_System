@@ -124,7 +124,12 @@
     <Compile Include="Screens\Admin\Customers\Report\Customer_Report.Designer.cs">
       <DependentUpon>Customer_Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Admin\Dealers\DB_Operations\Delete.cs" />
     <Compile Include="Screens\Admin\Dealers\DB_Operations\Display.cs" />
+    <Compile Include="Screens\Admin\Dealers\DB_Operations\Insert.cs" />
+    <Compile Include="Screens\Admin\Dealers\DB_Operations\Search.cs" />
+    <Compile Include="Screens\Admin\Dealers\DB_Operations\Update.cs" />
+    <Compile Include="Screens\Admin\Dealers\Dealer.cs" />
     <Compile Include="Screens\Admin\Dealers\Dealers.xaml.cs">
       <DependentUpon>Dealers.xaml</DependentUpon>
     </Compile>
@@ -167,6 +172,7 @@
     <Compile Include="Screens\Admin\Inventory\Report\Inventry_Report.Designer.cs">
       <DependentUpon>Inventry_Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Admin\Products\DB_Operations\Delete.cs" />
     <Compile Include="Screens\Admin\Products\DB_Operations\Display.cs" />
     <Compile Include="Screens\Admin\Products\DB_Operations\Insert.cs" />
     <Compile Include="Screens\Admin\Products\DB_Operations\Search.cs" />
