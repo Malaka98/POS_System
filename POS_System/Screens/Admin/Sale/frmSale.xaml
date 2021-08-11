@@ -24,9 +24,10 @@
             </Grid.RowDefinitions>
             <materialDesign:PackIcon Kind="Account" Height="40" Width="90" Grid.Row="0"/>
             <TextBlock
+                x:Name="lblTop"
                 VerticalAlignment="Center"
               Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-              Text="User" Margin="90,6,352,7.8" Grid.Row="0"/>
+              Text="Sale" Margin="90,6,352,7.8" Grid.Row="0"/>
             <TextBlock
                 VerticalAlignment="Center"
               Style="{StaticResource MaterialDesignHeadline6TextBlock}"
@@ -347,6 +348,7 @@
                         Text="Sub Total" />
                                 <TextBox
                                     x:Name="txtSubTotal"
+                                    Text="0"
                         VerticalAlignment="Center"
                                     HorizontalAlignment="Right"
                         Margin="63,0,0,0"
@@ -362,6 +364,7 @@
                         Text="Discount(%)" />
                                 <TextBox
                                     x:Name="txtDiscount"
+                                    TextChanged="TxtDiscount_TextChanged"
                                     PreviewGotKeyboardFocus="TextBox_PreviewGotKeyboardFocus"
                         VerticalAlignment="Center"
                         Margin="43,0,0,0"
@@ -377,6 +380,7 @@
                         Text="VAT" />
                                 <TextBox
                                     x:Name="txtVAT"
+                                    TextChanged="TxtVAT_TextChanged"
                                     PreviewGotKeyboardFocus="TextBox_PreviewGotKeyboardFocus"
                         VerticalAlignment="Center"
                         Margin="102,0,0,0"
@@ -406,6 +410,7 @@
                         Text="Paid Amount" />
                                 <TextBox
                                     x:Name="txtPaidAmount"
+                                    TextChanged="TxtPaidAmount_TextChanged"
                                     PreviewGotKeyboardFocus="TextBox_PreviewGotKeyboardFocus"
                         VerticalAlignment="Center"
                         Margin="37,0,0,0"
@@ -421,6 +426,7 @@
                         Text="Return Amount" />
                                 <TextBox
                                     x:Name="txtReturnAmount"
+                                    IsReadOnly="True"
                         VerticalAlignment="Center"
                         Margin="20,0,0,0"
                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
@@ -443,7 +449,8 @@
                           Text="Discard" />
                                 </Button>
                                 <Button
-                        
+                        x:Name="btnCheckout"
+                                    Click="BtnCheckout_Click"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Grid.Column="0" Grid.Row="2"
                         Width="110"

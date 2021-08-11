@@ -29,7 +29,7 @@
             <TextBlock
                 VerticalAlignment="Center"
               Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-              Text="Inventry" Margin="90,6,352,7.8" Grid.Row="0" Grid.ColumnSpan="2" />
+              Text="Tranceactions" Margin="90,6,352,7.8" Grid.Row="0" Grid.ColumnSpan="2" />
             <TextBlock
                 Grid.Column="0"
                 Grid.Row="1"
@@ -40,26 +40,18 @@
                       Text="Filter By Transactions Type : " />
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                 <ComboBox
-                
+                SelectionChanged="ComboBox_SelectionChanged"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"
                 Padding="6"
                 materialDesign:HintAssist.Hint="Some item"
                 HorizontalAlignment="Left"
                 Width="321" Cursor="Hand" Margin="20,10,40,0" >
-                    <ComboBoxItem Content="Personal Computers"/>
-                    <ComboBoxItem Content="Laptops"/>
-                    <ComboBoxItem Content="RAM"/>
-                    <ComboBoxItem Content="Graphics Cards"/>
-                    <ComboBoxItem Content="CPU Processors"/>
-                    <ComboBoxItem Content="Motherboards"/>
-                    <ComboBoxItem Content="Power Supliers"/>
-                    <ComboBoxItem Content="Keyboard"/>
-                    <ComboBoxItem Content="Mouse"/>
-                    <ComboBoxItem Content="Case"/>
-                    <ComboBoxItem Content="Monitors"/>
+                    <ComboBoxItem Content="Sale"/>
+                    <ComboBoxItem Content="Purchase"/>
+                    
                 </ComboBox>
                 <Button
-                
+                Click="Button_Click"
                 Width="100"
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 Content="Show All"
