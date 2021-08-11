@@ -45,5 +45,32 @@ namespace POS_System.Screens.Admin.Dealers.DB_Operations
 
         }
 
+        public int GetDealCustIDFromName(string Name)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                connectionOBJ.GetConn().Open();
+                cmd = new SqlCommand("SELECT DealCustID FROM DealCust WHERE name='" + Name + "'", connectionOBJ.GetConn());
+
+                adapt = new SqlDataAdapter(cmd);
+                _ = adapt.Fill(dt);
+
+                return dt.Rows.Count > 0 ? int.Parse(dt.Rows[0]["DealCustID"].ToString()) : -1;
+            }
+            catch (SqlException e)
+            {
+                _ = MessageBox.Show(e.ToString());
+                return -1;
+            }
+            finally
+            {
+                cmd.Dispose();
+                adapt.Dispose();
+                connectionOBJ.GetConn().Close();
+            }
+        }
+
     }
 }
