@@ -194,9 +194,11 @@
     <Compile Include="Screens\Admin\Products\Report\Product_Report.Designer.cs">
       <DependentUpon>Product_Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Admin\Sale\DB_Operations\ProductDAL.cs" />
     <Compile Include="Screens\Admin\Sale\DB_Operations\Sale_C_Search.cs" />
     <Compile Include="Screens\Admin\Sale\DB_Operations\Sale_P_Search.cs" />
     <Compile Include="Screens\Admin\Sale\DB_Operations\TransactionDAL.cs" />
+    <Compile Include="Screens\Admin\Sale\DB_Operations\TransDetailsDAL.cs" />
     <Compile Include="Screens\Admin\Sale\frmSale.xaml.cs">
       <DependentUpon>frmSale.xaml</DependentUpon>
     </Compile>
