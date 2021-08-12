@@ -25,8 +25,10 @@ namespace POS_System.Screens.Admin.Sale
         private bool disposedValue;
         private string imgLoc = "laptop.png";
         private readonly DataTable transactionDT = new DataTable();
+        private readonly ProductDAL pDAL = new ProductDAL();
+        private readonly TransactionDAL transactionDAL = new TransactionDAL();
 
-        private TransactionDAL transactionDAL = new TransactionDAL();
+        private TransDetailsDAL TransDetailsDAL = new TransDetailsDAL();
 
 
         public FrmSale()
@@ -475,46 +477,104 @@ namespace POS_System.Screens.Admin.Sale
 
         private void BtnCheckout_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtDCName.Text))
+
+            try
             {
-                _ = MessageBox.Show("Plase enter Customer details");
-            }
-            else
-            {
-                Transaction transaction = new Transaction();
-                getID dId = new getID();
-                getpID getpID = new getpID();
-
-                transaction.type = "Sale";
-                transaction.DealCustID = dId.GetDealCustIDFromName(txtDCName.Text);
-                transaction.grandTotal = Math.Round(decimal.Parse(txtGrandTotal.Text), 2);
-                transaction.transaction_date = DateTime.Now;
-                transaction.tax = decimal.Parse(txtVAT.Text);
-                transaction.discount = decimal.Parse(txtDiscount.Text);
-
-                bool success = false;
-
-                using (TransactionScope tScope = new TransactionScope())
+                if (string.IsNullOrEmpty(txtDCName.Text))
                 {
+                    _ = MessageBox.Show("Plase enter Customer details");
+                }
+                else
+                {
+                    Transaction transaction = new Transaction();
+                    getID dId = new getID();
+                    getpID getpID = new getpID();
 
-                    bool t1 = transactionDAL.Insert_Transaction(transaction);
+                    transaction.type = "Sale";
+                    transaction.DealCustID = dId.GetDealCustIDFromName(txtDCName.Text);
+                    transaction.grandTotal = Math.Round(decimal.Parse(txtGrandTotal.Text), 2);
+                    transaction.transaction_date = DateTime.Now;
+                    transaction.tax = decimal.Parse(txtVAT.Text);
+                    transaction.discount = decimal.Parse(txtDiscount.Text);
 
-                    for (int i = 0; i < transactionDT.Rows.Count; i++)
+                    bool success = false;
+
+                    using (TransactionScope tScope = new TransactionScope())
                     {
-                        TransDetails transDetails = new TransDetails();
-                        string ProductName = transactionDT.Rows[i][0].ToString();
 
-                        transDetails.ProdID = getpID.GetProductIDFromName(ProductName);
-                        //transDetails.transno = lblTransNoUnit.Content.ToString();
-                        transDetails.price = decimal.Parse(transactionDT.Rows[i][1].ToString());
-                        transDetails.qty = decimal.Parse(transactionDT.Rows[i][2].ToString());
-                        transDetails.total_price = Math.Round(decimal.Parse(transactionDT.Rows[i][3].ToString()), 2);
-                        transDetails.type = "Sale";
-                        transDetails.DealCustID = dId.GetDealCustIDFromName(txtDCName.Text);
-                        transDetails.added_date = DateTime.Now;
-                        string transactionType = lblTop.Text;
+                        bool t1 = transactionDAL.Insert_Transaction(transaction);
+
+                        for (int i = 0; i < transactionDT.Rows.Count; i++)
+                        {
+                            TransDetails transDetails = new TransDetails();
+                            string ProductName = transactionDT.Rows[i][0].ToString();
+
+                            transDetails.ProdID = getpID.GetProductIDFromName(ProductName);
+                            //transDetails.transno = lblTransNoUnit.Content.ToString();
+                            transDetails.price = decimal.Parse(transactionDT.Rows[i][1].ToString());
+                            transDetails.qty = decimal.Parse(transactionDT.Rows[i][2].ToString());
+                            transDetails.total_price = Math.Round(decimal.Parse(transactionDT.Rows[i][3].ToString()), 2);
+                            transDetails.type = "Sale";
+                            transDetails.DealCustID = dId.GetDealCustIDFromName(txtDCName.Text);
+                            transDetails.added_date = DateTime.Now;
+                            string transactionType = lblTop.Text;
+
+                            bool t2 = false;
+                            if (transactionType == "Purchase")
+                            {
+                                //Increase the Product
+                                t2 = pDAL.IncreaseProduct(transDetails.ProdID, transDetails.qty);
+                            }
+                            else if (transactionType == "Sale")
+                            {
+                                //Decrease the Product Quantity
+                                t2 = pDAL.DecraseProduct(transDetails.ProdID, transDetails.qty);
+                            }
+
+                            bool t3 = TransDetailsDAL.InsertTransDetails(transDetails);
+
+                            success = t1 && t2 && t3;
+
+                            if (success)
+                            {
+                                tScope.Complete();
+
+                                _ = MessageBox.Show("Transaction Completed Succesfully");
+
+                                gridAddedProducts.ItemsSource = null;
+                                gridAddedProducts.Items.Clear();
+                                transactionDT.Rows.Clear();
+
+                                txtDCSearch.Text = "";
+                                txtDCName.Text = "";
+                                txtSurname.Text = "";
+                                txtDCEmail.Text = "";
+                                txtDCMobile.Text = "";
+                                txtDCAddress.Text = "";
+                                txtPDSearch.Text = "";
+                                txtPDName.Text = "";
+                                txtPDInventory.Text = "0";
+                                txtPDPrice.Text = "0";
+                                txtPDQuantity.Text = "0";
+                                txtSubTotal.Text = "0";
+                                txtDiscount.Text = "0";
+                                txtVAT.Text = "0";
+                                txtGrandTotal.Text = "0";
+                                txtPaidAmount.Text = "0";
+                                txtReturnAmount.Text = "0";
+                                //lblTransNoUnit.Content = "0000000000";
+                            }
+                            else
+                            {
+                                //Transaction Failed
+                                _ = MessageBox.Show("Transaction Failed");
+                            }
+                        }
                     }
                 }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
 
         }
