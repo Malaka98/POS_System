@@ -194,6 +194,11 @@
     <Compile Include="Screens\Admin\Products\Report\Product_Report.Designer.cs">
       <DependentUpon>Product_Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Admin\Purchase\DB_Operations\Purchase_D_Search.cs" />
+    <Compile Include="Screens\Admin\Purchase\IDisposble.cs" />
+    <Compile Include="Screens\Admin\Purchase\Purchase.xaml.cs">
+      <DependentUpon>Purchase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\Admin\Sale\DB_Operations\ProductDAL.cs" />
     <Compile Include="Screens\Admin\Sale\DB_Operations\Sale_C_Search.cs" />
     <Compile Include="Screens\Admin\Sale\DB_Operations\Sale_P_Search.cs" />
@@ -281,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Screens\Admin\Products\Products.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\Admin\Purchase\Purchase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

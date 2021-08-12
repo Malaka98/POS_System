@@ -1,10 +1,12 @@
 ﻿using POS_System.Screens.Admin.Customers;
+using POS_System.Screens.Admin.Dealers;
 using POS_System.Screens.Admin.Products;
+using POS_System.Screens.Admin.Purchase.DB_Operations;
+using POS_System.Screens.Admin.Sale;
 using POS_System.Screens.Admin.Sale.DB_Operations;
-using getID = POS_System.Screens.Admin.Dealers.DB_Operations.Search;
-using getpID = POS_System.Screens.Admin.Products.DB_Operations.Search;
 using System;
 using System.Data;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,59 +14,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WindowsInput;
 using WindowsInput.Native;
-using System.Transactions;
+using getID = POS_System.Screens.Admin.Dealers.DB_Operations.Search;
+using getpID = POS_System.Screens.Admin.Products.DB_Operations.Search;
+using Trns = POS_System.Screens.Admin.Sale.Transaction;
 
-namespace POS_System.Screens.Admin.Sale
+namespace POS_System.Screens.Admin.Purchase
 {
     /// <summary>
-    /// Interaction logic for frmSale.xaml
+    /// Interaction logic for Purchase.xaml
     /// </summary>
-    public partial class FrmSale : UserControl, IDisposable
+    public partial class Purchase : UserControl, IDisposable
     {
+
         private Control ActiveControl;
         private bool disposedValue;
         private string imgLoc = "laptop.png";
+        private bool disposedValue1;
         private readonly DataTable transactionDT = new DataTable();
         private readonly ProductDAL pDAL = new ProductDAL();
         private readonly TransactionDAL transactionDAL = new TransactionDAL();
 
         private readonly TransDetailsDAL TransDetailsDAL = new TransDetailsDAL();
 
-
-        public FrmSale()
+        public Purchase()
         {
             InitializeComponent();
-        }
-
-        
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
-            }
-        }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~FrmSale()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
 
         private void Card_Loaded(object sender, RoutedEventArgs e)
@@ -86,14 +60,14 @@ namespace POS_System.Screens.Admin.Sale
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             _ = Dispatcher.BeginInvoke(new Action(delegate ()
-              {
-                  lblTime.Text = DateTime.Now.ToString("T");
-              }));
+            {
+                lblTime.Text = DateTime.Now.ToString("T");
+            }));
         }
 
         private void TxtDCSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
             string sKey = txtDCSearch.Text;
 
             if (sKey == "")
@@ -107,16 +81,16 @@ namespace POS_System.Screens.Admin.Sale
                 return;
             }
 
-            using (Sale_C_Search obj = new Sale_C_Search(sKey))
-            {
-                Customer cus = obj.Search_query();
+            Purchase_D_Search obj = new Purchase_D_Search(sKey);
+            
+                Dealer cus = obj.Search_query();
                 txtDCName.Text = cus.Name;
                 txtDCEmail.Text = cus.Email;
                 txtDCMobile.Text = cus.Contact;
                 txtDCAddress.Text = cus.Address;
-                txtSurname.Text = cus.Surname;
+                txtSurname.Text = cus.Person;
 
-            }
+            
         }
 
         private void Btn_Nmb9_Click(object sender, RoutedEventArgs e)
@@ -324,11 +298,12 @@ namespace POS_System.Screens.Admin.Sale
                         imgBox.ImageSource = new BitmapImage(new Uri(imagePath));
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _ = MessageBox.Show(ex.ToString());
             }
-            
+
         }
 
         private void BtnADD_Click(object sender, RoutedEventArgs e)
@@ -378,7 +353,7 @@ namespace POS_System.Screens.Admin.Sale
                     imgLoc = "laptop.png";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _ = MessageBox.Show("Error :- " + ex);
             }
@@ -486,11 +461,11 @@ namespace POS_System.Screens.Admin.Sale
                 }
                 else
                 {
-                    Transaction transaction = new Transaction();
+                    Trns transaction = new Trns();
                     getID dId = new getID();
                     getpID getpID = new getpID();
 
-                    transaction.type = "Sale";
+                    transaction.type = "Purchase";
                     transaction.DealCustID = dId.GetDealCustIDFromName(txtDCName.Text);
                     transaction.grandTotal = Math.Round(decimal.Parse(txtGrandTotal.Text), 2);
                     transaction.transaction_date = DateTime.Now;
@@ -514,12 +489,13 @@ namespace POS_System.Screens.Admin.Sale
                             transDetails.price = decimal.Parse(transactionDT.Rows[i][1].ToString());
                             transDetails.qty = decimal.Parse(transactionDT.Rows[i][2].ToString());
                             transDetails.total_price = Math.Round(decimal.Parse(transactionDT.Rows[i][3].ToString()), 2);
-                            transDetails.type = "Sale";
+                            transDetails.type = "Purchase";
                             transDetails.DealCustID = dId.GetDealCustIDFromName(txtDCName.Text);
                             transDetails.added_date = DateTime.Now;
                             string transactionType = lblTop.Text;
 
                             bool t2 = false;
+
                             if (transactionType == "Purchase")
                             {
                                 //Increase the Product
@@ -572,11 +548,41 @@ namespace POS_System.Screens.Admin.Sale
                         }
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                _ = MessageBox.Show(ex.Message);
             }
 
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue1)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue1 = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~Purchase()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
