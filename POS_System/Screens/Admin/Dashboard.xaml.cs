@@ -9,6 +9,7 @@ using Customers = POS_System.Screens.Admin.Customers;
 using Inventory = POS_System.Screens.Admin.Inventory;
 using Transactions = POS_System.Screens.Admin.Transactions;
 using Sale = POS_System.Screens.Admin.Sale;
+using Purchase = POS_System.Screens.Admin.Purchase;
 
 namespace POS_System.Screens.Admin
 {
@@ -108,6 +109,13 @@ namespace POS_System.Screens.Admin
                 case "Sale":
                     GridMain.Children.Clear();
                     using (Sale::FrmSale usc = new Sale::FrmSale())
+                    {
+                        _ = GridMain.Children.Add(usc);
+                    }
+                    break;
+                case "Purchase":
+                    GridMain.Children.Clear();
+                    using (Purchase::Purchase usc = new Purchase::Purchase())
                     {
                         _ = GridMain.Children.Add(usc);
                     }
